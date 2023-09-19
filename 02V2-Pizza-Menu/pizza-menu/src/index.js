@@ -67,58 +67,75 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  const numOfPizzas = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our menu</h2>
-      <Pizza
-        name="Pizza Spinaci"
-        ingredient="Tomato, mozarella, spinach"
-        photoName="pizzas/spinaci.jpg"
-        price="10"
-      />
-      <Pizza
-        name="Pizza Funghi"
-        ingredient="Tomato, mushrooms, peper, cheese"
-        photoName="pizzas/spinaci.jpg"
-        price="10"
-      />
-      <Pizza
-        name="Pizza Capricosa"
-        ingredient="Tomato, carrot, peper, cheese"
-        photoName="pizzas/spinaci.jpg"
-        price="10"
-      />
+      {numOfPizzas > 0 ? (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. All
+            from our stone oven, all organic all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We're out of pizzas!!</p>
+      )}
     </main>
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  // if (pizzaObj.soldOut) return null;
+
   return (
-    <div className="pizza">
-      <img src={props.photoName} alt={props.name} />
+    <li className={pizzaObj.soldOut ? "pizza sold-out" : "pizza "}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredient}</p>
-        <span>{props.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
-function Footer() {
+function Footer(props) {
   const hour = new Date().getHours();
-  const openHour = 12;
+  const openHour = 7;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
   return (
     <footer className="footer">
-      {new Date().toLocaleTimeString()}. We're currently open!
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
+        <p>We're happy to welcome you when we're open</p>
+      )}
     </footer>
   );
 }
 
+function Order({ closeHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour} until {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
 //React v18
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
