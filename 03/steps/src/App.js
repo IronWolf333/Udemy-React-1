@@ -1,13 +1,19 @@
-export default function App() {
-  const step = 1;
+import { useState } from "react";
 
-  //const [step, setStep] = 0;
+const messages = [
+  "Learn React ⚛️",
+  "Apply for jobs 💼",
+  "Invest your new income 🤑",
+];
+
+export default function App() {
+  const [step, setStep] = useState(1);
 
   function handlePrevious() {
-    alert("Previouse");
+    if (step > 1) setStep(step - 1);
   }
-  function handleNExt() {
-    alert("Next");
+  function handleNext() {
+    if (step < 3) setStep(step + 1);
   }
   return (
     <div className="steps">
@@ -28,7 +34,7 @@ export default function App() {
         </button>
         <button
           style={{ backgroundColor: "#7950f2", color: "#fff" }}
-          onClick={handleNExt}
+          onClick={handleNext}
         >
           Next
         </button>
@@ -36,9 +42,3 @@ export default function App() {
     </div>
   );
 }
-
-const messages = [
-  "Learn React ⚛️",
-  "Apply for jobs 💼",
-  "Invest your new income 🤑",
-];
