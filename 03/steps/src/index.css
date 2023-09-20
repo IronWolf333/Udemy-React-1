@@ -5,7 +5,14 @@ const messages = [
   "Invest your new income 🤑",
 ];
  */
-
+.con {
+  display: flex;
+  flex-direction: row;
+}
+.dugme {
+  width: 40px;
+  height: 40px;
+}
 * {
   box-sizing: border-box;
 }
